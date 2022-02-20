@@ -26,10 +26,13 @@ namespace CustomerCountryCase.Services
             return _dbContext.Customers.FirstOrDefault(c => c.Id == convertedId);
         }
 
-        public void Add(CustomerDto customerToAdd)
+        public void Add(NewCustomerDto customerToAdd)
         {
-            var countryId = Convert.ToInt32(customerToAdd.CountryId);
-            var customer = new Customer { CompanyName = customerToAdd.CompanyName, CountryId = countryId};
+            var customer = new Customer
+            {
+                CompanyName = customerToAdd.CompanyName,
+                CountryId = Convert.ToInt32(customerToAdd.CountryId)
+            };
 
             _dbContext.Customers.Add(customer);
             _dbContext.SaveChanges();

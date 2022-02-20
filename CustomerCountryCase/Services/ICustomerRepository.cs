@@ -11,7 +11,7 @@ namespace CustomerCountryCase.Services
     {
         IEnumerable<Customer> GetAllRegistered();
         Customer Get(string id);
-        void Add(CustomerDto customer);
+        void Add(NewCustomerDto customer);
         void Remove(string id);
     }
 }

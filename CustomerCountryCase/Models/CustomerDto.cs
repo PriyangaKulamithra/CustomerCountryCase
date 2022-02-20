@@ -8,6 +8,6 @@ namespace CustomerCountryCase.Models
     public class CustomerDto
     {
         public string CompanyName { get; set; }
-        public string CountryId { get; set; }
+        public string Country { get; set; }
     }
 }

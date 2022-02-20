@@ -3,7 +3,28 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<form method="post" asp-controller="Home" asp-action="Index">
+    <div class="form-group">
+        <label asp-for="NewCustomerName" class="text-uppercase">Name</label>
+        <input asp-for="NewCustomerName" class="form-control">
+        <span asp-validation-for="NewCustomerName" class="field-validation-error"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="SelectedCountryId" class="text-uppercase">Land</label>
+        <select asp-for="SelectedCountryId" asp-items="Model.Countries"></select>
+        <span asp-validation-for="SelectedCountryId" class="field-validation-error"></span>
+    </div>
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary">Spara</button>
+    </div>
+</form>
+
+@if (Model.RegisteredCustomers != null)
+{
+    <ul>
+        @foreach (var company in Model.RegisteredCustomers)
+        {
+            <li>@company.CompanyName - @company.Country</li>
+        }
+    </ul>
+}

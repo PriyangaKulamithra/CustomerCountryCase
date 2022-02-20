@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using CustomerCountryCase.Data;
 using CustomerCountryCase.Models;
@@ -7,6 +8,7 @@ using CustomerCountryCase.Services;
 using CustomerCountryCase.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
 namespace CustomerCountryCase.Controllers
@@ -37,11 +39,30 @@ namespace CustomerCountryCase.Controllers
             return View(viewmodel);
         }
 
+        [HttpPost]
+        public IActionResult Index(HomeIndexViewModel model)
+        {
+            if(model.SelectedCountryId == 0)
+                ModelState.AddModelError("SelectedCountryId", "Please select a country");
+
+            if (ModelState.IsValid)
+            {
+                var newCustomer = new NewCustomerDto { CompanyName = model.NewCustomerName, CountryId = model.SelectedCountryId.ToString() };
+                _customerRepository.Add(newCustomer);
+                return RedirectToAction("Index");
+            }
+
+            model.RegisteredCustomers = GetAllCustomers();
+            model.Countries = GetCountrySelectListItems();
+            return View(model);
+        }
+
         private IEnumerable<CustomerDto> GetAllCustomers()
         {
             return _customerRepository.GetAllRegistered().Select(c => new CustomerDto
             {
-                CompanyName = c.CompanyName, CountryId = c.CountryId.ToString()
+                CompanyName = c.CompanyName, 
+                Country = c.Country.Country1
             });
         }
 
