@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using CustomerCountryCase.Data;
+using CustomerCountryCase.Models;
 
 namespace CustomerCountryCase.Services
 {
@@ -10,7 +11,7 @@ namespace CustomerCountryCase.Services
     {
         IEnumerable<Customer> GetAllRegistered();
         Customer Get(string id);
-        void Add(string name, string countryId);
+        void Add(CustomerDto customer);
         void Remove(string id);
     }
 }

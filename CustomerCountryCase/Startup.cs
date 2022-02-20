@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using CustomerCountryCase.Data;
+using CustomerCountryCase.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -27,6 +28,10 @@ namespace CustomerCountryCase
         {
             services.AddDbContext<CustomerRegistrationContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("Database")));
+
+            services.AddTransient<ICustomerRepository, CustomerRepository>();
+            services.AddTransient<ICountryRepository, CountryRepository>();
+
             services.AddControllersWithViews();
         }
 
